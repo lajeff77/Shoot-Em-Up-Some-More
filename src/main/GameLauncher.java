@@ -24,7 +24,6 @@ public class GameLauncher extends StateBasedGame {
         {
             e.printStackTrace();
         }
-
     }
 
     @Override
