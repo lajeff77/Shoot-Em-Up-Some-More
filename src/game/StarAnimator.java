@@ -1,12 +1,13 @@
-package graphics;
+package game;
 
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 
 import java.util.Random;
 
 public class StarAnimator {
     private static final int MAX_STAR_COUNT = 50;
-    private static final int STAR_VELOCITY = 2;
+    private static final int STAR_VELOCITY = 3;
     private static final int LANES = 10;
     private static final int SCREEN_WIDTH = 640;
     private static final int SCREEN_HEIGHT = 480;
@@ -36,7 +37,7 @@ public class StarAnimator {
     {
         String ref = starRefs[r.nextInt(starRefs.length)];
         int x = pickXBasedOnRange();
-        int y = SCREEN_HEIGHT;
+        int y = 0;
         stars[index] = new Star(ref,x,y);
     }
 
@@ -72,13 +73,13 @@ public class StarAnimator {
         return r.nextInt(SCREEN_WIDTH/LANES) + (SCREEN_WIDTH/LANES)*index;
     }
 
-    public static void update(int delta) throws SlickException
+    public static void update(GameContainer gameContainer, int delta) throws SlickException
     {
         for (int i = 0; i < MAX_STAR_COUNT; i++) {
-            stars[i].setY(stars[i].getY() - STAR_VELOCITY);
+            stars[i].setY(stars[i].getY() + STAR_VELOCITY);
 
             //check if star moved off screen and replace with new star
-            if(stars[i].getY() < 0)
+            if(stars[i].getY() > SCREEN_HEIGHT)
                 makeNewStar(i);
             stars[i].getStarAnimation().update(delta);
         }

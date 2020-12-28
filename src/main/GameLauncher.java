@@ -16,7 +16,7 @@ public class GameLauncher extends StateBasedGame {
         try
         {
             AppGameContainer app = new AppGameContainer(new GameLauncher());
-            app.setDisplayMode(640,480, false);
+            app.setDisplayMode(640,580, false);
             app.setTargetFrameRate(60);
             app.start();
 
