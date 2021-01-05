@@ -5,14 +5,14 @@ import org.newdawn.slick.util.ResourceLoader;
 
 import java.awt.Font;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class UI {
 
     private static Image uiPanel;
     private static Image gaugeBackHo, gaugeBackVert, rivet, terminal;
     private static Image overheat, health, blue, red, green;
-    private static Animation blueButtonAtk, redButtonAtk, greenButtonAtk;
-    private static Animation blueButtonDef, redButtonDef, greenButtonDef;
+    private static ButtonPanel attack, defense;
     private static boolean fontLoaded;
     private static org.newdawn.slick.Font font;
     private static final Color FONT_COLOR = new Color(59,69,102);
@@ -28,22 +28,26 @@ public class UI {
         blue = new Image("res/ui/Blue Meter.png");
         red = new Image("res/ui/Red Meter.png");
         green = new Image("res/ui/Green Meter.png");
-        blueButtonAtk = new Animation(new SpriteSheet("res/ui/Blue Button.png",32,32),200);
-        blueButtonAtk.stopAt(0);
-        redButtonAtk = new Animation(new SpriteSheet("res/ui/Red Button.png",32,32),200);
-        redButtonAtk.stopAt(0);
-        greenButtonAtk = new Animation(new SpriteSheet("res/ui/Green Button.png",32,32),200);
-        greenButtonAtk.stopAt(0);
-        blueButtonDef = new Animation(new SpriteSheet("res/ui/Blue Button.png",32,32),200);
-        blueButtonDef.stopAt(0);
-        redButtonDef = new Animation(new SpriteSheet("res/ui/Red Button.png",32,32),200);
-        redButtonDef.stopAt(0);
-        greenButtonDef = new Animation(new SpriteSheet("res/ui/Green Button.png",32,32),200);
-        greenButtonDef.stopAt(0);
+
+        ArrayList<Button> attackButtons = new ArrayList<Button>();
+        attackButtons.add(new Button("res/ui/Blue Button.png",213,523, Input.KEY_8));//Blue button
+        attackButtons.add(new Button("res/ui/Red Button.png",250,523, Input.KEY_9));//Red button
+        attackButtons.add(new Button("res/ui/Green Button.png",286,523, Input.KEY_0));//Green button
+        attack = new ButtonPanel(attackButtons);
+
+        ArrayList<Button> defenseButtons = new ArrayList<Button>();
+        defenseButtons.add(new Button("res/ui/Blue Button.png",373,523, Input.KEY_I));//Blue button
+        defenseButtons.add(new Button("res/ui/Red Button.png",410,523, Input.KEY_O));//Red button
+        defenseButtons.add(new Button("res/ui/Green Button.png",446,523,Input.KEY_P));//Green button
+        defense = new ButtonPanel(defenseButtons);
     }
 
-    public static void update(){
-
+    public static void update(GameContainer gameContainer){
+        Input input = gameContainer.getInput();
+        boolean mousePressed;
+        mousePressed = input.isMousePressed(Input.MOUSE_LEFT_BUTTON);
+        attack.update(gameContainer, mousePressed);
+        defense.update(gameContainer, mousePressed);
     }
 
     public static void render(Graphics graphics){
@@ -53,7 +57,6 @@ public class UI {
 
         //background
         graphics.drawImage(uiPanel,0,480);
-
 
         //health
         font.drawString( 40,490, "Health", FONT_COLOR);
@@ -80,17 +83,13 @@ public class UI {
         //attack buttons
         font.drawString( 245,490, "Attack", FONT_COLOR);
         graphics.drawImage(rivet, 190, 520);
-        blueButtonAtk.draw(213,523);
-        redButtonAtk.draw(250,523);
-        greenButtonAtk.draw(286,523);
+        attack.render(graphics);
 
         //defense buttons
         font.drawString( 400,490, "Defense", FONT_COLOR);
 
         graphics.drawImage(rivet, 350, 520);
-        blueButtonDef.draw(373,523);
-        redButtonDef.draw(410,523);
-        greenButtonDef.draw(446,523);
+        defense.render(graphics);
 
         //score
         //System.out.println();

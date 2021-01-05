@@ -26,7 +26,7 @@ public class GameState extends BasicGameState {
         int delta = i;
         Ship.update(gameContainer, delta);
         StarAnimator.update(gameContainer, delta);
-        //UI.update();
+        UI.update(gameContainer);
     }
 
     @Override
