@@ -2,6 +2,8 @@ package game;
 
 import org.newdawn.slick.*;
 
+import java.util.ArrayList;
+
 public class Ship {
 
     private static final int START_X = 299;
@@ -17,11 +19,16 @@ public class Ship {
     private static int x, y;
     private static int score;
 
+    private static ArrayList<Bullet> bullets;
+    private static ArrayList<Bullet> removeQueue;
+
     public static void init() throws SlickException {
         x = START_X;
         y = START_Y;
         ship = new Animation(new SpriteSheet(REF, SHIP_WIDTH, SHIP_HEIGHT), DURATION);
         score = 0;
+        bullets = new ArrayList<Bullet>();
+        removeQueue = new ArrayList<Bullet>();
     }
 
     public static void update(GameContainer gameContainer, int delta) {
@@ -47,6 +54,30 @@ public class Ship {
         if (y > gameContainer.getHeight() - SHIP_HEIGHT - 100)
             y = gameContainer.getHeight() - SHIP_HEIGHT - 100;
 
+        //shoot a bullet
+        if(input.isKeyPressed(Input.KEY_SPACE)) {
+            //TODO introduce a bullet rate and change this to input.isKeyDown();
+            try {
+                bullets.add(new Bullet(x + SHIP_WIDTH/2 - 2, y ,  UI.getAttackType()));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+
+        for(Bullet b: bullets)
+        {
+            b.update();
+            //check if bullet left screen
+            if (b.offScreen())
+                removeQueue.add(b);
+        }
+
+        //remove bullets
+        for(Bullet b: removeQueue)
+            bullets.remove(b);
+        removeQueue.clear();
+
         ship.update(delta);
     }
 
@@ -60,9 +91,11 @@ public class Ship {
         return score;
     }
 
-    public static void render()
+    public static void render(Graphics graphics)
     {
         ship.draw(x,y);
+        for(Bullet b: bullets)
+            b.render(graphics);
     }
 
 }

@@ -119,4 +119,10 @@ public class UI {
         return font;
     }
 
+    public static int getAttackType()
+    {
+        //TODO write this method
+        return 0;
+    }
+
 }

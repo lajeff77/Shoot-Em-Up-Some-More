@@ -34,7 +34,7 @@ public class GameState extends BasicGameState {
         graphics.setBackground(new Color(24,20,37));
         graphics.setAntiAlias(true);
         StarAnimator.render();
-        Ship.render();
+        Ship.render(graphics);
         UI.render(graphics);
     }
 
