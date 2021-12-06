@@ -17,11 +17,13 @@ public class ButtonPanel {
 
     public void update(GameContainer gameContainer, boolean mousePressed)
     {
-        //TODO fix simultaneous button press with keys
+        //TODO fix simultaneous button press with keys by using an integer
         aButtonWasPressed = false;
         for(Button b: buttons)
         {
             b.update(gameContainer, mousePressed);
+            if(aButtonWasPressed && b.wasJustPushedDown() && b.isDown())
+                b.pushButton();
 
             //if this button was just pressed
             if(!aButtonWasPressed && b.wasJustPushedDown())
