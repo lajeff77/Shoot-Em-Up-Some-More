@@ -1,6 +1,7 @@
 package game;
 
 import org.newdawn.slick.*;
+import ui.UI;
 
 import java.util.ArrayList;
 

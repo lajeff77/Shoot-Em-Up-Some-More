@@ -25,6 +25,6 @@ public class CometEnemy extends Enemy{
     @Override
     public void render(Graphics graphics){
         cometAnim.draw(x,y);
-        drawCollisionBox(graphics);
+        //drawCollisionBox(graphics);
     }
 }

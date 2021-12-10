@@ -45,7 +45,7 @@ public class Enemy {
     public void render(Graphics graphics)
     {
         graphics.drawImage(image,x,y);
-        drawCollisionBox(graphics);
+        //drawCollisionBox(graphics);
     }
 
     public boolean isIntersecting(int x, int y)
