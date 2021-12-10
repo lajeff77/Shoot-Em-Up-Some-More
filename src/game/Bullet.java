@@ -68,4 +68,12 @@ public class Bullet {
     {
         return y < 0;
     }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
 }

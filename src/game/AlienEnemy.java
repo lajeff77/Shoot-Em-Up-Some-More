@@ -11,7 +11,7 @@ public class AlienEnemy extends Enemy{
     private int upperX;
 
     public AlienEnemy(int x, int y, Image image) {
-        super(x, y, image);
+        super(x, y, image, x, y+8, WIDTH, HEIGHT -16);
         Random randomGenerator = new Random();
         isMovingLeft = randomGenerator.nextBoolean();
         selectLane(x);
@@ -21,10 +21,14 @@ public class AlienEnemy extends Enemy{
     public void update(int delta)
     {
         super.update(delta);
-        if(isMovingLeft)
+        if(isMovingLeft) {
             x -= SIDE_VELOCITY;
-        else
+            colX -= SIDE_VELOCITY;
+        }
+        else {
             x += SIDE_VELOCITY;
+            colX += SIDE_VELOCITY;
+        }
 
         if(x < lowerX)
             isMovingLeft = false;

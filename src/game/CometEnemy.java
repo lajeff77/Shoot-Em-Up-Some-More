@@ -8,6 +8,10 @@ public class CometEnemy extends Enemy{
     private final int DURATION = 150;
     public CometEnemy(int x, int y, Image image) throws SlickException {
         super(x, y, image);
+        colX += 9;
+        colWidth = 14;
+        colY +=1;
+        colHeight -= 1;
         cometAnim = new Animation(new SpriteSheet(REF, WIDTH, HEIGHT), DURATION);
     }
 
@@ -21,5 +25,6 @@ public class CometEnemy extends Enemy{
     @Override
     public void render(Graphics graphics){
         cometAnim.draw(x,y);
+        drawCollisionBox(graphics);
     }
 }

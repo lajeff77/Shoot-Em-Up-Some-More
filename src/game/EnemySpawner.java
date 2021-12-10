@@ -21,6 +21,7 @@ public class EnemySpawner {
 
 
     private static ArrayList<Enemy> enemies;
+    private static ArrayList<Enemy> removeQueue;
     private static SpriteSheet enemySheet;
     private static Random randomGenerator;
 
@@ -31,6 +32,7 @@ public class EnemySpawner {
         lastSpawn = 0;
         randomGenerator = new Random();
         enemies = new ArrayList<Enemy>();
+        removeQueue = new ArrayList<Enemy>();
     }
 
     public static void update(int delta)
@@ -50,8 +52,15 @@ public class EnemySpawner {
             lastSpawn = 0;
         }
 
-        for(Enemy e: enemies)
+        for(Enemy e: enemies){
             e.update(delta);
+            if(e.shouldBeRemoved())
+                removeQueue.add(e);
+        }
+
+        for(Enemy e: removeQueue)
+            enemies.remove(e);
+        removeQueue.clear();
     }
 
     public static void render(Graphics graphics)
